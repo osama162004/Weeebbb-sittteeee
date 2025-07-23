@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>يومياتي الراقية</title>
+    <style>
+        :root {
+            --primary-color: #6d6875;
+            --secondary-color: #b5838d;
+            --accent-color: #e5989b;
+            --light-color: #ffcdb2;
+            --text-color: #333;
+            --light-text: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-text);
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        nav {
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            border-radius: 50px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        nav a {
+            float: right;
+            display: block;
+            color: var(--light-text);
+            text-align: center;
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        nav a.active {
+            background-color: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+        
+        nav a.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 25%;
+            width: 50%;
+            height: 3px;
+            background-color: var(--light-color);
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .active-tab {
+            display: block;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        input[type="date"],
+        input[type="time"],
+        textarea,
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+        
+        input[type="date"]:focus,
+        input[type="time"]:focus,
+        textarea:focus,
+        input[type="text"]:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(229, 152, 155, 0.2);
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+        }
+        
+        .entry {
+            background-color: white;
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 6px 6px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .entry:hover {
+            transform: translateX(5px);
+        }
+        
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .entry-date {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+        
+        .entry-content {
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        
+        .entry-goals {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #eee;
+            color: var(--secondary-color);
+        }
+        
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin: 0 auto 20px;
+            display: block;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            nav a {
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>يومياتي الراقية</h1>
+            <p>مساحة خاصة لتسجيل ذكرياتي وأهدافي</p>
+        </header>
+        
+        <nav>
+            <a href="#" class="tab-link active" data-tab="new-entry">يوم جديد</a>
+            <a href="#" class="tab-link" data-tab="archives">المحفوظات</a>
+            <a href="#" class="tab-link" data-tab="profile">معلوماتي</a>
+        </nav>
+        
+        <div id="new-entry" class="tab-content active-tab">
+            <h2>سجل يومياتك اليوم</h2>
+            <form id="diary-form">
+                <div class="form-group">
+                    <label for="entry-date">التاريخ</label>
+                    <input type="date" id="entry-date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="entry-time">الوقت</label>
+                    <input type="time" id="entry-time" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="entry-title">عنوان اليوم</label>
+                    <input type="text" id="entry-title" placeholder="كيف كان يومك؟" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="entry-content">تفاصيل اليوم</label>
+                    <textarea id="entry-content" placeholder="اكتب هنا ما حدث معك اليوم، مشاعرك، وأفكارك..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="entry-goals">أهدافي وإنجازاتي</label>
+                    <textarea id="entry-goals" placeholder="ما هي أهدافك لهذا اليوم؟ ماذا أنجزت؟"></textarea>
+                </div>
+                
+                <button type="submit">حفظ اليوميات</button>
+            </form>
+        </div>
+        
+        <div id="archives" class="tab-content">
+            <h2>محفوظات يومياتي</h2>
+            <div id="entries-list">
+                <!-- سيتم عرض المدخلات المحفوظة هنا -->
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">يوم جميل في الحديقة</span>
+                        <span class="entry-date">١٥ مايو ٢٠٢٣ - ٠٣:٣٠ مساءً</span>
+                    </div>
+                    <div class="entry-content">
+                        <p>قضيت اليوم في الحديقة مع الأصدقاء، كان الجو رائعاً والأزهار متفتحة في كل مكان. شعرت بالسلام الداخلي والارتياح بعد أسبوع طويل من العمل.</p>
+                    </div>
+                    <div class="entry-goals">
+                        <p><strong>أهداف اليوم:</strong> قراءة 50 صفحة من الكتاب الجديد - تم تحقيق الهدف</p>
+                    </div>
+                </div>
+                
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">لقاء عائلي مميز</span>
+                        <span class="entry-date">١٠ مايو ٢٠٢٣ - ٠٨:٠٠ مساءً</span>
+                    </div>
+                    <div class="entry-content">
+                        <p>اجتمعنا اليوم كعائلة بعد فترة طويلة من الانشغال، كان اللقاء مليئاً بالضحكات والذكريات الجميلة. تناولنا العشاء معاً وخططنا لرحلة عائلية الصيف القادم.</p>
+                    </div>
+                    <div class="entry-goals">
+                        <p><strong>أهداف اليوم:</strong> الاتصال بالجد والجدة - التخطيط للرحلة العائلية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="profile" class="tab-content">
+            <h2>معلوماتي الشخصية</h2>
+            <img src="https://via.placeholder.com/150" alt="صورة الملف الشخصي" class="profile-pic">
+            
+            <form id="profile-form">
+                <div class="form-group">
+                    <label for="user-name">الاسم</label>
+                    <input type="text" id="user-name" placeholder="أدخل اسمك" value="سارة أحمد">
+                </div>
+                
+                <div class="form-group">
+                    <label for="user-bio">نبذة عني</label>
+                    <textarea id="user-bio" placeholder="اكتب نبذة عن نفسك">أحب الكتابة وتسجيل اللحظات الجميلة في حياتي. هذه الصفحة هي مساحتي الخاصة للتعبير عن نفسي وتتبع تطوري الشخصي.</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="user-goals">أهدافي العامة</label>
+                    <textarea id="user-goals" placeholder="ما هي أهدافك في الحياة؟">1. تطوير مهاراتي في الكتابة
+2. السفر إلى 3 دول جديدة هذا العام
+3. تعلم لغة جديدة
+4. تحقيق التوازن بين العمل والحياة الشخصية</textarea>
+                </div>
+                
+                <button type="submit">حفظ التغييرات</button>
+            </form>
+        </div>
+        
+        <footer>
+            © 2023 يومياتي الراقية - كل الحقوق محفوظة
+        </footer>
+    </div>
+
+    <script>
+        // تبديل بين التبويبات
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // إزالة التنشيط من جميع الروابط
+                document.querySelectorAll('.tab-link').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // إضافة التنشيط للرابط المحدد
+                this.classList.add('active');
+                
+                // إخفاء جميع محتويات التبويبات
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active-tab');
+                });
+                
+                // عرض محتوى التبويب المحدد
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active-tab');
+            });
+        });
+        
+        // حفظ اليوميات
+        document.getElementById('diary-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const date = document.getElementById('entry-date').value;
+            const time = document.getElementById('entry-time').value;
+            const title = document.getElementById('entry-title').value;
+            const content = document.getElementById('entry-content').value;
+            const goals = document.getElementById('entry-goals').value;
+            
+            // هنا يمكنك إضافة كود لحفظ البيانات في localStorage أو قاعدة بيانات
+            alert('تم حفظ اليوميات بنجاح!');
+            
+            // مسح الحقول بعد الحفظ
+            this.reset();
+            
+            // إضافة المدخل الجديد إلى قائمة المحفوظات (للتوضيح فقط)
+            addNewEntry(date, time, title, content, goals);
+        });
+        
+        // حفظ معلومات الملف الشخصي
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('تم تحديث الملف الشخصي بنجاح!');
+        });
+        
+        // دالة لإضافة مدخل جديد إلى المحفوظات (للتجربة)
+        function addNewEntry(date, time, title, content, goals) {
+            const entriesList = document.getElementById('entries-list');
+            
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'entry';
+            
+            const dateObj = new Date(date);
+            const formattedDate = dateObj.toLocaleDateString('ar-EG', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            const timeParts = time.split(':');
+            const formattedTime = `${timeParts[0]}:${timeParts[1]} ${timeParts[0] >= 12 ? 'مساءً' : 'صباحاً'}`;
+            
+            entryDiv.innerHTML = `
+                <div class="entry-header">
+                    <span class="entry-title">${title}</span>
+                    <span class="entry-date">${formattedDate} - ${formattedTime}</span>
+                </div>
+                <div class="entry-content">
+                    <p>${content}</p>
+                </div>
+                ${goals ? `<div class="entry-goals">
+                    <p><strong>أهداف اليوم:</strong> ${goals}</p>
+                </div>` : ''}
+            `;
+            
+            entriesList.prepend(entryDiv);
+        }
+    </script>
+</body>
+</html>
